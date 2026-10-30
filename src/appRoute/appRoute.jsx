@@ -1,13 +1,11 @@
-import { lazy, Suspense } from "react";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { lazy, Suspense, useEffect } from "react";
+import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
 import { CartProvider } from "../context/CartContext";
 import { ToastProvider } from "../context/ToastContext";
 import { UiProvider } from "../context/UiContext";
 import Layout from "../components/layout/Layout";
 
-// Route-level code splitting: each page's bundle is only fetched when the
-// user actually navigates there, instead of all pages shipping in the
-// initial Home bundle.
+const LandingPage = lazy(() => import("../pages/LandingPage"));
 const HomePage = lazy(() => import("../pages/HomePage"));
 const FruitsPage = lazy(() => import("../pages/FruitsPage"));
 const LeafyGreensPage = lazy(() => import("../pages/LeafyGreensPage"));
@@ -27,6 +25,15 @@ const MembershipPage = lazy(() => import("../pages/company/MembershipPage"));
 const QualityLabPage = lazy(() => import("../pages/company/QualityLabPage"));
 const CareersPage = lazy(() => import("../pages/company/CareersPage"));
 
+// Scroll to top whenever the route changes (landing -> home -> about ...)
+function ScrollToTop() {
+  const { pathname } = useLocation();
+  useEffect(() => {
+    window.scrollTo({ top: 0, left: 0 });
+  }, [pathname]);
+  return null;
+}
+
 function PageFallback() {
   return (
     <div className="min-h-[60vh] flex items-center justify-center text-sm text-slate-400">
@@ -42,10 +49,14 @@ function AppRoute() {
         <ToastProvider>
           <UiProvider>
             <Suspense fallback={<PageFallback />}>
+              <ScrollToTop />
               <Routes>
+                {/* Landing page (standalone, no shop navbar/footer) */}
+                <Route path="/" element={<LandingPage />} />
+
                 <Route element={<Layout />}>
-                  {/* Existing Main Routes */}
-                  <Route path="/" element={<HomePage />} />
+                  {/* Shop home (opened by "Explore Vegetables") */}
+                  <Route path="/home" element={<HomePage />} />
                   <Route path="/fruits" element={<FruitsPage />} />
                   <Route path="/leafy-greens" element={<LeafyGreensPage />} />
                   <Route path="/herbs-seasoning" element={<HerbsSeasoningPage />} />
@@ -56,7 +67,7 @@ function AppRoute() {
                   <Route path="/orders" element={<MyOrdersPage />} />
                   <Route path="/offers" element={<OffersPage />} />
 
-                  {/* Company Routes */}
+                  {/* Company Routes (About opened by "Discover Our Story") */}
                   <Route path="/about" element={<AboutPage />} />
                   <Route path="/partner-with-us" element={<FarmerPartnerPage />} />
                   <Route path="/delivery-partner" element={<DeliveryPartnerPage />} />

@@ -15,8 +15,7 @@ export default function Layout() {
   } = useUi();
 
   return (
-    <div className="bg-[#FBFDFB] text-slate-800 flex flex-col min-h-screen overflow-x-hidden">
-
+        <div className="bg-[#FBFDFB] text-slate-800 flex flex-col min-h-screen overflow-x-clip">
       <Toast />
 
       <Navbar />

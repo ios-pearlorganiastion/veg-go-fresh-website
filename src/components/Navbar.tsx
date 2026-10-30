@@ -1,163 +1,219 @@
-import { useNavigate } from "react-router-dom";
-import {
-  Search,
-  MapPin,
-  ShoppingCart,
-  User,
-  Menu,
-  ChevronDown,
-  Leaf,
-  Bot,
-  Instagram,
-  Facebook,
-  Twitter,
-} from "lucide-react";
+import { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import { Menu, X, ShoppingBasket, Phone, ShoppingCart } from "lucide-react";
 import { VegGoLogo } from "./Logo";
 import { useCart } from "../context/CartContext";
-import { useToast } from "../context/ToastContext";
-import { useUi } from "../context/UiContext";
-
-const BRAND = { forestGreen: "#135029" };
 
 export default function Navbar() {
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const navigate = useNavigate();
   const { cartCount, cartTotal } = useCart();
-  const { showToast } = useToast();
-  const { searchQuery, setSearchQuery, openMobileNav, openAiModal } = useUi();
 
   return (
-    <>
-      {/* ================= TOP UTILITY BAR ================= */}
-      <div className="bg-[#EAF6EA] text-[#1E5F26] border-b border-[#D8EBD7] px-4 lg:px-10 py-1.5 text-xs hidden md:flex items-center justify-between">
-        <div className="flex items-center gap-1.5 font-medium">
-          <Leaf className="w-3.5 h-3.5 text-[#228B22]" />
-          <span>Eat Fresh, Live Healthy</span>
-        </div>
+    <header className="sticky top-0 z-50 shadow-xs">
+      {/* Tier 1: Top Announcement Bar (Dark Green) */}
+      <div className="bg-[#135029] text-white py-2 px-4 sm:px-6 lg:px-8 text-xs">
+        <div className="w-full max-w-[1550px] mx-auto flex items-center justify-between">
+          <div className="flex items-center gap-2 font-medium">
+            <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+            <span>Welcome To VegGo Fresh</span>
+            <span className="hidden sm:inline text-emerald-200/70">
+              — Quality You Can Measure
+            </span>
+          </div>
 
-        <div className="flex items-center gap-1 cursor-pointer hover:opacity-90 transition">
-          <MapPin className="w-3.5 h-3.5 text-[#228B22]" />
-          <span>
-            Delivering to: <strong className="font-semibold text-[#113B1E]">Kukatpally, Hyderabad</strong>
-          </span>
-          <ChevronDown className="w-3 h-3 text-slate-500 ml-0.5" />
-        </div>
-
-        <div className="flex items-center gap-4 text-[11px] font-medium text-[#1E5F26]">
-          <button onClick={() => showToast("Seller portal")} className="hover:underline">
-            Become a Seller
-          </button>
-          <span className="text-[#C2DEC1]">|</span>
-          <button onClick={() => navigate("/offers")} className="hover:underline">
-            Offers
-          </button>
-          <span className="text-[#C2DEC1]">|</span>
-          <button onClick={() => showToast("Support")} className="hover:underline">
-            Help &amp; Support
-          </button>
-          <div className="flex items-center gap-2.5 ml-2 pl-3 border-l border-[#C2DEC1]">
-            <Instagram className="w-3.5 h-3.5 cursor-pointer hover:text-black transition" />
-            <Facebook className="w-3.5 h-3.5 cursor-pointer hover:text-black transition" />
-            <Twitter className="w-3.5 h-3.5 cursor-pointer hover:text-black transition" />
+          <div className="hidden md:flex items-center gap-6 font-semibold tracking-wide">
+            <Link to="/home" className="hover:text-emerald-200 transition">
+              Home
+            </Link>
+            <Link to="/about" className="hover:text-emerald-200 transition">
+              About Us
+            </Link>
+            <a href="/#who-we-are" className="hover:text-emerald-200 transition">
+              Our Story
+            </a>
+            <Link to="/about#founder" className="hover:text-emerald-200 transition">
+              Founder
+            </Link>
+            <a
+              href="mailto:support@veggofresh.com"
+              className="hover:text-emerald-200 transition flex items-center gap-1 text-emerald-300"
+            >
+              <Phone className="w-3.5 h-3.5" /> Contact Us
+            </a>
           </div>
         </div>
       </div>
 
-      {/* ================= MAIN HEADER NAVBAR ================= */}
-      <header className="sticky top-0 z-40 bg-white border-b border-[#EEF4ED] shadow-[0_2px_8px_rgba(0,0,0,0.02)]">
-        <div className="max-w-[1400px] mx-auto px-4 lg:px-8 py-3 flex items-center justify-between gap-4">
-          <button
-            onClick={openMobileNav}
-            className="lg:hidden p-1.5 rounded-lg hover:bg-emerald-50 text-slate-700"
-            aria-label="Open menu"
-          >
-            <Menu className="w-6 h-6" />
-          </button>
-
-          <div className="flex items-center cursor-pointer shrink-0" onClick={() => navigate("/")}>
-            <VegGoLogo className="h-10 md:h-12 w-auto" />
+      {/* Tier 2: Main Navigation Bar */}
+      <div className="bg-white/95 backdrop-blur-md border-b border-[#E8F2E6]">
+        <div className="w-full max-w-[1550px] mx-auto px-4 sm:px-6 lg:px-8 py-3 flex items-center justify-between gap-6">
+          <div className="flex items-center gap-4">
+            <Link to="/" aria-label="VegGo Fresh Home" className="flex flex-col">
+              <VegGoLogo className="h-12 sm:h-16 w-auto" />
+              <span className="text-[10px] sm:text-[13px] font-bold text-[#135029] tracking-tight mt-0.5">
+                Freshness You Can Trust. Quality You Can Measure.
+              </span>
+            </Link>
           </div>
 
-          <button
-            onClick={() => showToast("All categories menu clicked")}
-            className="hidden lg:flex items-center gap-2 px-4 py-2.5 rounded-lg text-white text-xs font-bold tracking-wide shrink-0 transition hover:brightness-105 active:scale-98 shadow-2xs"
-            style={{ backgroundColor: BRAND.forestGreen }}
-          >
-            <Menu className="w-4 h-4" />
-            <span>All Categories</span>
-          </button>
-
-          <div className="flex-1 max-w-xl hidden sm:flex items-center border border-[#DCE8DA] rounded-lg overflow-hidden bg-white focus-within:ring-2 focus-within:ring-[#228B22]/30 transition">
-            <input
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
-              placeholder="Search for vegetables, fruits and more..."
-              className="flex-1 px-4 py-2 text-xs md:text-sm outline-none text-slate-700 placeholder:text-slate-400 min-w-0"
-            />
-            <div className="flex items-center gap-1 px-3 border-l border-[#DCE8DA] text-xs text-slate-500 bg-slate-50/50 cursor-pointer">
-              <span>All</span>
-              <ChevronDown className="w-3 h-3 text-slate-400" />
-            </div>
-            <button
-              onClick={() => showToast(`Searching for "${searchQuery || "fresh produce"}"`)}
-              className="px-3.5 py-2.5 text-white transition hover:brightness-105"
-              style={{ backgroundColor: BRAND.forestGreen }}
-              aria-label="Search"
+          {/* Desktop Navigation Links */}
+          <nav className="hidden lg:flex items-center gap-6 xl:gap-7 text-sm font-bold text-slate-700">
+            <a
+              href="/#who-we-are"
+              className="hover:text-[#135029] transition-colors py-1 relative hover:after:w-full after:w-0 after:h-[2px] after:bg-[#135029] after:absolute after:bottom-0 after:left-0 after:transition-all"
             >
-              <Search className="w-4 h-4" />
-            </button>
-          </div>
-
-          <div className="flex items-center gap-4 md:gap-6">
-            <div
-              onClick={openAiModal}
-              className="flex items-center gap-2 px-3 py-1.5 rounded-xl bg-[#F0F8EE] border border-[#D5EAD3] cursor-pointer hover:bg-[#E5F3E3] transition shadow-2xs"
+              Who we are
+            </a>
+            <a
+              href="/#why-veggo"
+              className="hover:text-[#135029] transition-colors py-1 relative hover:after:w-full after:w-0 after:h-[2px] after:bg-[#135029] after:absolute after:bottom-0 after:left-0 after:transition-all"
             >
-              <div className="w-7 h-7 rounded-full bg-[#135029] flex items-center justify-center text-emerald-200">
-                <Bot className="w-4 h-4" />
-              </div>
-              <div className="leading-tight text-left hidden sm:block">
-                <div className="text-[11px] font-bold text-[#113B1E]">VegGo</div>
-                <div className="text-[9px] text-[#4A7C54] font-medium">AI Assistant</div>
-              </div>
-            </div>
-
-            <div
-              onClick={() => navigate("/account")}
-              className="hidden md:flex items-center gap-2 cursor-pointer hover:opacity-80 transition"
+              Why VegGo
+            </a>
+            <a
+              href="/#freshness"
+              className="hover:text-[#135029] transition-colors py-1 relative hover:after:w-full after:w-0 after:h-[2px] after:bg-[#135029] after:absolute after:bottom-0 after:left-0 after:transition-all"
             >
-              <div className="w-8 h-8 rounded-full border border-slate-200 flex items-center justify-center text-slate-600 bg-slate-50">
-                <User className="w-4 h-4" />
-              </div>
-              <div className="leading-tight text-left">
-                <div className="text-[10px] text-slate-500 font-medium">My Account</div>
-                <div className="text-xs font-bold text-slate-800 flex items-center gap-0.5">
-                  <span>Hello, Shiva</span>
-                  <ChevronDown className="w-3 h-3 text-slate-400" />
+              Freshness
+            </a>
+            <a
+              href="/#packaging"
+              className="hover:text-[#135029] transition-colors py-1 relative hover:after:w-full after:w-0 after:h-[2px] after:bg-[#135029] after:absolute after:bottom-0 after:left-0 after:transition-all"
+            >
+              Packaging
+            </a>
+
+            <Link
+              to="/home"
+              className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-[#135029] text-white text-xs font-semibold hover:bg-[#0f4023] shadow-sm transition hover:shadow-md cursor-pointer"
+            >
+              <ShoppingBasket className="w-4 h-4" />
+              Explore Store
+            </Link>
+
+            {/* CART BUTTON: Hidden when empty (cartCount === 0), shows when items added */}
+            {cartCount > 0 && (
+              <button
+                onClick={() => navigate("/cart")}
+                className="inline-flex items-center gap-2.5 px-4 py-2 rounded-full bg-[#EAF6EA] border border-[#C5E5C2] text-[#135029] hover:bg-[#DCF2D8] transition shadow-xs cursor-pointer animate-in fade-in zoom-in-95 duration-200"
+              >
+                <div className="relative">
+                  <ShoppingCart className="w-5 h-5 text-[#135029]" />
+                  <span className="absolute -top-2 -right-2 text-[10px] w-4 h-4 rounded-full bg-[#135029] text-white font-extrabold flex items-center justify-center">
+                    {cartCount}
+                  </span>
                 </div>
-              </div>
-            </div>
+                <span className="text-xs font-bold">
+                  ₹{cartTotal.toFixed(2)}
+                </span>
+              </button>
+            )}
+          </nav>
 
-            <div
-              onClick={() => navigate("/cart")}
-              className="flex items-center gap-2.5 cursor-pointer hover:opacity-90 transition select-none"
-            >
-              <div className="relative">
-                <ShoppingCart className="w-6 h-6 text-[#111827]" />
-                <span
-                  className="absolute -top-2 -right-2 text-[10px] w-4 h-4 rounded-full flex items-center justify-center text-white font-extrabold shadow-2xs"
-                  style={{ backgroundColor: BRAND.forestGreen }}
-                >
+          {/* Right Side on Mobile: Cart Badge (if items exist) + Hamburger */}
+          <div className="flex items-center gap-2 lg:hidden">
+            {cartCount > 0 && (
+              <button
+                onClick={() => navigate("/cart")}
+                className="p-2 rounded-xl bg-[#EAF6EA] text-[#135029] relative cursor-pointer"
+                aria-label="View Cart"
+              >
+                <ShoppingCart className="w-5 h-5" />
+                <span className="absolute -top-1 -right-1 text-[9px] w-4 h-4 rounded-full bg-[#135029] text-white font-extrabold flex items-center justify-center">
                   {cartCount}
                 </span>
-              </div>
-              <div className="leading-tight text-left hidden sm:block">
-                <div className="text-[10px] text-slate-500 font-medium">Cart</div>
-                <div className="text-xs font-bold text-[#111827]">₹{cartTotal.toFixed(2)}</div>
-              </div>
-            </div>
+              </button>
+            )}
+
+            <button
+              onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+              aria-label="Toggle navigation"
+              className="p-2 rounded-xl text-slate-700 hover:bg-slate-100 transition cursor-pointer"
+            >
+              {mobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+            </button>
           </div>
         </div>
-      </header>
-    </>
+      </div>
+
+      {/* Mobile Drawer */}
+      {mobileMenuOpen && (
+        <div className="lg:hidden bg-white border-b border-[#E8F2E6] px-5 py-5 space-y-4 shadow-lg animate-in fade-in slide-in-from-top-3">
+          <div className="flex flex-col space-y-3 text-sm font-bold text-slate-800">
+            <Link
+              to="/home"
+              onClick={() => setMobileMenuOpen(false)}
+              className="text-[#135029] hover:bg-[#EAF6EA] px-3 py-2 rounded-lg"
+            >
+              Home / Store
+            </Link>
+            <a
+              href="/#who-we-are"
+              onClick={() => setMobileMenuOpen(false)}
+              className="hover:bg-slate-50 px-3 py-2 rounded-lg text-slate-700"
+            >
+              Who we are
+            </a>
+            <a
+              href="/#why-veggo"
+              onClick={() => setMobileMenuOpen(false)}
+              className="hover:bg-slate-50 px-3 py-2 rounded-lg text-slate-700"
+            >
+              Why VegGo
+            </a>
+            <a
+              href="/#freshness"
+              onClick={() => setMobileMenuOpen(false)}
+              className="hover:bg-slate-50 px-3 py-2 rounded-lg text-slate-700"
+            >
+              Freshness
+            </a>
+            <a
+              href="/#packaging"
+              onClick={() => setMobileMenuOpen(false)}
+              className="hover:bg-slate-50 px-3 py-2 rounded-lg text-slate-700"
+            >
+              Packaging
+            </a>
+            <Link
+              to="/about"
+              onClick={() => setMobileMenuOpen(false)}
+              className="hover:bg-slate-50 px-3 py-2 rounded-lg text-slate-700"
+            >
+              About Us &amp; Founder
+            </Link>
+          </div>
+
+          <div className="pt-3 border-t border-slate-100 space-y-2.5">
+            {/* Mobile Cart Button (shown only when cart has items) */}
+            {cartCount > 0 && (
+              <button
+                onClick={() => {
+                  setMobileMenuOpen(false);
+                  navigate("/cart");
+                }}
+                className="w-full flex items-center justify-between px-4 py-2.5 rounded-xl bg-[#EAF6EA] text-[#135029] font-bold text-sm"
+              >
+                <div className="flex items-center gap-2">
+                  <ShoppingCart className="w-4 h-4" />
+                  <span>View Cart ({cartCount} items)</span>
+                </div>
+                <span>₹{cartTotal.toFixed(2)}</span>
+              </button>
+            )}
+
+            <Link
+              to="/home"
+              onClick={() => setMobileMenuOpen(false)}
+              className="w-full flex items-center justify-center gap-2 py-3 rounded-xl bg-[#135029] text-white text-sm font-semibold shadow-md"
+            >
+              <ShoppingBasket className="w-4 h-4" />
+              Explore Vegetables
+            </Link>
+          </div>
+        </div>
+      )}
+    </header>
   );
 }

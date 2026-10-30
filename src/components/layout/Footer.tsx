@@ -1,14 +1,14 @@
 import { useNavigate } from "react-router-dom";
 import {
-  Truck,
-  ShieldCheck,
-  RotateCcw,
-  Award,
-  Phone,
-  Mail,
-  MapPin,
   Smartphone,
   CreditCard,
+  Mail,
+  MapPin,
+  Phone,
+  Scale,
+  Leaf,
+  ShieldCheck,
+  ShoppingBag,
 } from "lucide-react";
 import { VegGoLogo } from "../Logo";
 import { useToast } from "../../context/ToastContext";
@@ -17,60 +17,81 @@ export default function Footer() {
   const navigate = useNavigate();
   const { showToast } = useToast();
 
-  const features = [
-    {
-      icon: Truck,
-      title: "Express Delivery",
-      sub: "Fresh at your door in 30-45 mins",
-    },
+  const brandPillars = [
     {
       icon: ShieldCheck,
-      title: "100% Organic & Pure",
-      sub: "Zero chemical fertilizers used",
+      title: "Freshness Focused",
+      sub: "Careful product selection & handling",
     },
     {
-      icon: RotateCcw,
-      title: "Instant Hassle-Free Returns",
-      sub: "No questions asked refund",
+      icon: Scale,
+      title: "Quality You Can Measure",
+      sub: "Clear units & transparent gram pricing",
     },
     {
-      icon: Award,
-      title: "Direct From Local Farmers",
-      sub: "Fair trade pricing guaranteed",
+      icon: ShoppingBag,
+      title: "Digital Convenience",
+      sub: "Effortless ordering via app & web",
+    },
+    {
+      icon: Leaf,
+      title: "Thoughtful Packaging",
+      sub: "Exploring paper & recyclable options",
     },
   ];
 
-  // Company links configured with their respective routes
   const companyLinks = [
-    { title: "About VegGo", path: "/about" },
-    { title: "Partner With Us (Farmers)", path: "/partner-with-us" },
-    { title: "Become a Delivery Partner", path: "/delivery-partner" },
-    { title: "VegGo Plus Membership", path: "/veggo-plus" },
-    { title: "Quality Assurance Lab", path: "/quality-assurance" },
-    { title: "Careers & Culture", path: "/careers" },
+    { title: "About Us", path: "/about" },
+    { title: "Our Founder", path: "/about#founder" },
+    { title: "Mission & Vision", path: "/about#vision" },
+    { title: "Partner With Us", path: "/partner-with-us" },
+    { title: "Careers", path: "/careers" },
   ];
+
+  const customerServiceLinks = [
+    { title: "Contact Us", path: "/contact" },
+    { title: "FAQs", path: "/faqs" },
+    { title: "Delivery Information", path: "/delivery-info" },
+    { title: "Returns & Refunds", path: "/returns" },
+  ];
+
+  const policyLinks = [
+    { title: "Privacy Policy", path: "/privacy-policy" },
+    { title: "Terms & Conditions", path: "/terms" },
+    { title: "Shipping & Delivery Policy", path: "/shipping-policy" },
+    { title: "Cancellation & Refund Policy", path: "/refund-policy" },
+  ];
+
+  const handleLinkClick = (path: string, label: string) => {
+    if (path.startsWith("/about#")) {
+      navigate("/about");
+      window.scrollTo({ top: 0, behavior: "smooth" });
+      return;
+    }
+    try {
+      navigate(path);
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    } catch {
+      showToast(`${label} page coming soon`);
+    }
+  };
 
   return (
-    <footer className="mt-10 sm:mt-12 lg:mt-16 bg-white border-t border-[#E8F2E6] overflow-hidden">
-      {/* Features */}
+    <footer className="mt-12 sm:mt-16 bg-white border-t border-[#E8F2E6] overflow-hidden text-left">
+      {/* Brand Pillars Highlight */}
       <div className="border-b border-slate-100 bg-[#F9FCF9] py-6 sm:py-8 px-4 sm:px-6 lg:px-8">
-        <div className="max-w-[1400px] mx-auto grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 sm:gap-6">
-          {features.map((f) => (
-            <div
-              key={f.title}
-              className="flex items-center gap-3 sm:gap-3.5 text-left min-w-0"
-            >
-              <div className="shrink-0 w-10 h-10 rounded-full bg-[#EAF6EA] flex items-center justify-center">
-                <f.icon className="w-6 h-6 sm:w-7 sm:h-7 text-[#228B22]" />
+        <div className="w-full max-w-[1550px] mx-auto grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 sm:gap-6">
+          {brandPillars.map((p) => (
+            <div key={p.title} className="flex items-center gap-3.5 min-w-0">
+              <div className="shrink-0 w-10 h-10 rounded-xl bg-[#EAF6EA] flex items-center justify-center text-[#135029]">
+                <p.icon className="w-5 h-5" />
               </div>
-
               <div className="min-w-0">
                 <h4 className="text-xs sm:text-sm font-semibold text-slate-900 leading-tight">
-                  {f.title}
+                  {p.title}
                 </h4>
-
-                <p className="mt-1 text-[10px] sm:text-[11px] text-slate-500 leading-relaxed">
-                  {f.sub}
+                <p className="mt-1 text-[11px] text-slate-500 leading-relaxed truncate">
+                  {p.sub}
                 </p>
               </div>
             </div>
@@ -78,91 +99,58 @@ export default function Footer() {
         </div>
       </div>
 
-      {/* Main Footer */}
-      <div className="max-w-[1400px] mx-auto py-8 sm:py-10 lg:py-12 px-4 sm:px-6 lg:px-8">
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-8 sm:gap-10 lg:gap-8 text-left">
-          {/* Brand */}
-          <div className="lg:col-span-2 space-y-4 lg:pr-6">
+      {/* Main Grid — Widened to 1550px to match Hero */}
+      <div className="w-full max-w-[1550px] mx-auto py-10 lg:py-14 px-4 sm:px-6 lg:px-8">
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-8 lg:gap-8">
+          
+          {/* Brand Info (Col 1 & 2) */}
+          <div className="sm:col-span-2 lg:col-span-2 space-y-4">
             <div
               className="cursor-pointer inline-block"
               onClick={() => {
-                navigate("/");
+                navigate("/home");
                 window.scrollTo({ top: 0, behavior: "smooth" });
               }}
             >
-              <VegGoLogo className="h-9 sm:h-10 w-auto" />
+              <VegGoLogo className="h-12 sm:h-14 w-auto" />
             </div>
 
-            <p className="text-[11px] sm:text-xs text-slate-600 leading-relaxed max-w-sm">
-              VegGo Fresh brings you farm-harvested vegetables, seasonal fruits,
-              organic greens, and daily dairy essentials harvested at dawn and
-              delivered right to your kitchen.
+            <p className="text-xs font-semibold text-[#135029] tracking-wide">
+              Freshness You Can Trust. Quality You Can Measure.
             </p>
 
-            <div className="space-y-3 pt-1 text-[11px] sm:text-xs text-slate-600">
-              <div className="flex items-start gap-2.5">
-                <Phone className="w-4 h-4 shrink-0 mt-0.5 text-[#228B22]" />
-                <span>
-                  Helpline: <strong>+91 1800-425-8344</strong> (Toll Free)
-                </span>
-              </div>
+            <p className="text-xs text-slate-600 leading-relaxed max-w-sm">
+              A fresh-produce business focused on digital convenience, transparent
+              measurements, and a growing vision for customers across India.
+            </p>
 
-              <div className="flex items-start gap-2.5 min-w-0">
-                <Mail className="w-4 h-4 shrink-0 mt-0.5 text-[#228B22]" />
-                <span className="break-all">
-                  Email: <strong>support@veggofresh.com</strong>
-                </span>
+            <div className="pt-1 text-xs text-slate-600 space-y-2">
+              <div className="flex items-center gap-2">
+                <MapPin className="w-4 h-4 shrink-0 text-[#228B22]" />
+                <span>Hyderabad, Telangana, India</span>
               </div>
-
-              <div className="flex items-start gap-2.5">
-                <MapPin className="w-4 h-4 shrink-0 mt-0.5 text-[#228B22]" />
-                <span>Hub: Road No. 12, Kukatpally, Hyderabad, TS 500072</span>
+              <div className="flex items-center gap-2">
+                <Mail className="w-4 h-4 shrink-0 text-[#228B22]" />
+                <span className="font-medium">support@veggofresh.com</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <Phone className="w-4 h-4 shrink-0 text-[#228B22]" />
+                <span>Customer Care: +91 90000 00000</span>
               </div>
             </div>
           </div>
 
-          {/* Categories */}
-          <div className="space-y-3">
-            <h4 className="text-xs sm:text-sm font-bold uppercase tracking-wider text-slate-900">
-              Popular Categories
-            </h4>
-
-            <ul className="space-y-2.5 text-[11px] sm:text-xs text-slate-600">
-              {[
-                "Fresh Vegetables",
-                "Exotic & Organic Fruits",
-                "Hydroponic Greens",
-                "Dairy & Farm Eggs",
-                "Millet Grains & Pulses",
-                "Aromatic Herbs & Spices",
-              ].map((item) => (
-                <li key={item}>
-                  <button
-                    onClick={() => showToast(`Filtering ${item}`)}
-                    className="hover:text-[#135029] transition text-left"
-                  >
-                    {item}
-                  </button>
-                </li>
-              ))}
-            </ul>
-          </div>
-
-          {/* Company Links (Updated with Route Navigation) */}
+          {/* Company Links */}
           <div className="space-y-3">
             <h4 className="text-xs sm:text-sm font-bold uppercase tracking-wider text-slate-900">
               Company
             </h4>
-
-            <ul className="space-y-2.5 text-[11px] sm:text-xs text-slate-600">
+            <ul className="space-y-2.5 text-xs text-slate-600">
               {companyLinks.map((item) => (
                 <li key={item.title}>
                   <button
-                    onClick={() => {
-                      navigate(item.path);
-                      window.scrollTo({ top: 0, behavior: "smooth" });
-                    }}
-                    className="hover:text-[#135029] hover:underline transition text-left cursor-pointer font-medium"
+                    onClick={() => handleLinkClick(item.path, item.title)}
+                    className="hover:text-[#135029] hover:underline transition text-left cursor-pointer"
                   >
                     {item.title}
                   </button>
@@ -171,127 +159,106 @@ export default function Footer() {
             </ul>
           </div>
 
-          {/* App */}
+          {/* Customer Service Links */}
           <div className="space-y-3">
             <h4 className="text-xs sm:text-sm font-bold uppercase tracking-wider text-slate-900">
-              Download Our App
+              Customer Service
             </h4>
+            <ul className="space-y-2.5 text-xs text-slate-600">
+              {customerServiceLinks.map((item) => (
+                <li key={item.title}>
+                  <button
+                    onClick={() => handleLinkClick(item.path, item.title)}
+                    className="hover:text-[#135029] hover:underline transition text-left cursor-pointer"
+                  >
+                    {item.title}
+                  </button>
+                </li>
+              ))}
+            </ul>
+          </div>
 
-            <p className="text-[10px] sm:text-[11px] text-slate-500 leading-relaxed">
-              Enjoy exclusive app-only coupons and live GPS order tracking.
+          {/* Policies Links */}
+          <div className="space-y-3">
+            <h4 className="text-xs sm:text-sm font-bold uppercase tracking-wider text-slate-900">
+              Policies
+            </h4>
+            <ul className="space-y-2.5 text-xs text-slate-600">
+              {policyLinks.map((item) => (
+                <li key={item.title}>
+                  <button
+                    onClick={() => handleLinkClick(item.path, item.title)}
+                    className="hover:text-[#135029] hover:underline transition text-left cursor-pointer"
+                  >
+                    {item.title}
+                  </button>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          {/* Download App & Payment */}
+          <div className="sm:col-span-2 lg:col-span-1 space-y-3">
+            <h4 className="text-xs sm:text-sm font-bold uppercase tracking-wider text-slate-900">
+              Download App
+            </h4>
+            <p className="text-[11px] text-slate-500 leading-relaxed">
+              Order fresh vegetables easily from your phone.
             </p>
 
+            {/* Exact App Link Configured */}
             <button
               onClick={() => {
                 window.open(
-                  "https://play.google.com",
+                  "https://play.google.com/store/apps/details?id=com.veggofresh.customer&pcampaignid=web_share",
                   "_blank",
                   "noopener,noreferrer"
                 );
               }}
-              className="
-                w-full
-                flex
-                items-center
-                gap-2.5
-                px-3
-                py-2.5 sm:py-3
-                rounded-xl
-                bg-slate-900
-                text-white
-                text-xs
-                hover:bg-slate-800
-                transition
-                cursor-pointer
-              "
+              className="w-full flex items-center gap-2.5 px-3 py-2.5 rounded-xl bg-slate-900 text-white text-xs hover:bg-slate-800 transition cursor-pointer"
             >
-              <Smartphone className="w-7 h-7 sm:w-8 sm:h-8 shrink-0 text-emerald-400" />
-
+              <Smartphone className="w-6 h-6 shrink-0 text-emerald-400" />
               <div className="text-left min-w-0">
-                <div className="text-[10px] sm:text-[12px] text-slate-400 leading-tight">
-                  GET IT ON
-                </div>
-
-                <div className="text-sm sm:text-[16px] font-medium leading-tight truncate">
-                  Google Play &amp; iOS
-                </div>
+                <div className="text-[9px] text-slate-400 leading-tight">GET IT ON</div>
+                <div className="text-xs font-semibold leading-tight">Google Play &amp; iOS</div>
               </div>
             </button>
 
-            {/* Payments */}
-            <div className="pt-3">
-              <h5 className="text-[10px] sm:text-[12px] font-semibold text-slate-400 uppercase tracking-wider mb-2">
-                100% Secure Payments
+            <div className="pt-2">
+              <h5 className="text-[11px] font-semibold text-slate-400 uppercase tracking-wider mb-1.5">
+                Secure Payments
               </h5>
-
-              <div className="flex items-start gap-2 text-slate-400 text-xs">
-                <CreditCard className="w-5 h-5 sm:w-6 sm:h-6 shrink-0 text-slate-600" />
-
-                <span className="text-[10px] sm:text-[12px] text-slate-500 font-medium leading-relaxed">
-                  UPI • Cards • Net Banking • COD
-                </span>
+              <div className="flex items-center gap-1.5 text-slate-500 text-xs">
+                <CreditCard className="w-4 h-4 shrink-0 text-slate-600" />
+                <span className="text-[11px]">UPI • Cards • COD</span>
               </div>
             </div>
           </div>
+
         </div>
       </div>
 
       {/* Bottom Bar */}
-      <div className="border-t border-slate-100 py-5 sm:py-6 px-4 sm:px-6 lg:px-8 bg-slate-50 text-[10px] sm:text-[11px] text-slate-500">
-        <div
-          className="
-            max-w-[1400px]
-            mx-auto
-            flex
-            flex-col
-            sm:flex-row
-            items-center
-            justify-between
-            gap-4
-            text-center
-            sm:text-left
-          "
-        >
-          <div className="leading-relaxed">
-            © {new Date().getFullYear()}{" "}
-            <strong>VegGo Fresh Technologies Pvt. Ltd.</strong> All rights
-            reserved.
+      <div className="border-t border-slate-100 py-5 px-4 sm:px-6 lg:px-8 bg-slate-50 text-[11px] text-slate-500">
+        <div className="w-full max-w-[1550px] mx-auto flex flex-col sm:flex-row items-center justify-between gap-3 text-center sm:text-left">
+          <div>
+            © {new Date().getFullYear()} <strong>VegGo Fresh Private Limited</strong>. All rights reserved.
           </div>
-
-          <div className="flex flex-wrap items-center justify-center gap-x-3 gap-y-2">
-            <button
-              onClick={() => showToast("Privacy Policy")}
-              className="hover:underline"
-            >
-              Privacy Policy
+          <div className="flex flex-wrap items-center justify-center gap-x-4 gap-y-1">
+            <button onClick={() => showToast("CIN: U01111TS2024PTC000000")} className="hover:underline cursor-pointer">
+              CIN Registered
             </button>
-
-            <span className="hidden sm:inline">•</span>
-
-            <button
-              onClick={() => showToast("Terms of Use")}
-              className="hover:underline"
-            >
-              Terms of Use
+            <span>•</span>
+            <button onClick={() => showToast("MSME Registered Business")} className="hover:underline cursor-pointer">
+              MSME Recognized
             </button>
-
-            <span className="hidden sm:inline">•</span>
-
-            <button
-              onClick={() => showToast("Security & FSSAI Certified")}
-              className="hover:underline"
-            >
-              FSSAI Certified
-            </button>
-
-            <span className="hidden sm:inline">•</span>
-
+            <span>•</span>
             <button
               onClick={() => {
-                navigate("/");
+                navigate("/home");
                 window.scrollTo({ top: 0, behavior: "smooth" });
               }}
-              className="hover:underline font-semibold text-[#135029]"
+              className="hover:underline font-semibold text-[#135029] cursor-pointer"
             >
               Home
             </button>

@@ -56,7 +56,7 @@ export default function AccountPage() {
   const handleTabClick = (tabId: string) => {
     if (tabId === "logout") {
       showToast("Logged out");
-      navigate("/");
+      navigate("/home");
       return;
     }
     if (tabId === "orders") {
