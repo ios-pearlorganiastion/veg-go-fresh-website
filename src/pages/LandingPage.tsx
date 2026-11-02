@@ -12,7 +12,7 @@ import {
   Sprout,
   TrendingUp,
 } from "lucide-react";
-import Navbar from "../components/Navbar"; // Agar shared me hai to: "../components/shared/Navbar"
+import Navbar from "../components/Navbar";
 import Footer from "../components/layout/Footer";
 
 import slide1 from "../assets/images/hero/1.png";
@@ -106,7 +106,7 @@ function StoryButton({ className = "" }: { className?: string }) {
   );
 }
 
-/* ================= HERO CAROUSEL (WIDE NO-GAP LAYOUT) ================= */
+/* ================= HERO CAROUSEL (VIEWPORT FIT - ZERO SCROLL) ================= */
 function HeroCarousel() {
   const [index, setIndex] = useState(0);
 
@@ -119,11 +119,11 @@ function HeroCarousel() {
   }, []);
 
   return (
-    <section className="bg-[#FAFBF9] border-b border-[#EEF4ED] py-4 sm:py-6 lg:py-8">
+    <section className="bg-[#FAFBF9] border-b border-[#EEF4ED] pt-2 pb-5 sm:pt-3 sm:pb-6">
       <div className="w-full max-w-[1550px] mx-auto px-4 sm:px-6 lg:px-8">
         
-        {/* 1. TOP CAROUSEL IMAGE CONTAINER */}
-        <div className="relative w-full h-[280px] sm:h-[440px] lg:h-[540px] rounded-2xl overflow-hidden shadow-md bg-slate-100">
+        {/* 1. TOP CAROUSEL IMAGE CONTAINER (Viewport-adjusted height) */}
+        <div className="relative w-full h-[220px] sm:h-[300px] md:h-[360px] lg:h-[390px] xl:h-[420px] rounded-2xl overflow-hidden shadow-md bg-slate-100">
           {SLIDES.map((slide, i) => (
             <div
               key={i}
@@ -141,12 +141,12 @@ function HeroCarousel() {
           ))}
 
           {/* Dots Indicator */}
-          <div className="absolute bottom-4 left-1/2 -translate-x-1/2 z-20 flex gap-2">
+          <div className="absolute bottom-3 left-1/2 -translate-x-1/2 z-20 flex gap-1.5">
             {SLIDES.map((_, i) => (
               <span
                 key={i}
                 className={`h-1.5 rounded-full transition-all duration-500 ${
-                  i === index ? "w-6 bg-white shadow" : "w-2 bg-white/50"
+                  i === index ? "w-5 bg-white shadow" : "w-1.5 bg-white/50"
                 }`}
               />
             ))}
@@ -154,26 +154,26 @@ function HeroCarousel() {
         </div>
 
         {/* 2. TEXT DIRECTLY UNDER IMAGE */}
-        <div className="mt-6 sm:mt-8 text-left space-y-3">
-          <h1 className="text-xl sm:text-3xl lg:text-4xl font-extrabold text-[#113B1E] tracking-tight">
+        <div className="mt-4 sm:mt-5 text-left space-y-2.5">
+          <h1 className="text-lg sm:text-2xl lg:text-3xl font-extrabold text-[#113B1E] tracking-tight leading-snug">
             Fresh Vegetables. Smarter Shopping. A Better Everyday Experience.
           </h1>
 
-          <p className="text-sm sm:text-base text-slate-700 leading-relaxed max-w-5xl">
+          <p className="text-xs sm:text-sm text-slate-700 leading-relaxed max-w-5xl">
             Welcome to VegGo Fresh Private Limited — a fresh-produce venture inspired by agricultural roots and driven by modern business thinking. We aim to make vegetable shopping more convenient through digital access, clear product information, transparent measurements, and thoughtful packaging choices.
           </p>
 
-          <div className="pt-2 flex flex-wrap items-center gap-3">
+          <div className="pt-1.5 flex flex-wrap items-center gap-2.5">
             <Link
               to="/home"
-              className="inline-flex items-center justify-center px-6 py-2.5 rounded-lg bg-[#18532c] text-white text-sm font-semibold hover:bg-[#124022] transition shadow-xs cursor-pointer"
+              className="inline-flex items-center justify-center px-5 py-2 rounded-lg bg-[#18532c] text-white text-xs font-semibold hover:bg-[#124022] transition shadow-xs cursor-pointer"
             >
               Explore Vegetables
             </Link>
 
             <Link
               to="/about"
-              className="inline-flex items-center justify-center px-6 py-2.5 rounded-lg border-2 border-[#18532c] bg-white text-[#18532c] text-sm font-semibold hover:bg-[#EAF6EA] transition shadow-xs cursor-pointer"
+              className="inline-flex items-center justify-center px-5 py-2 rounded-lg border-2 border-[#18532c] bg-white text-[#18532c] text-xs font-semibold hover:bg-[#EAF6EA] transition shadow-xs cursor-pointer"
             >
               Discover Our Story
             </Link>
