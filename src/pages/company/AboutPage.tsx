@@ -36,26 +36,7 @@ const COMPANY_INFO = [
 export default function AboutPage() {
   return (
     <div className="w-full max-w-[1550px] mx-auto px-4 sm:px-6 lg:px-8 py-10 space-y-14">
-      {/* 1. Hero */}
-      <div className="bg-[#EAF6EA] border border-[#D5EAD3] rounded-3xl p-8 sm:p-12 text-center">
-        <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-white text-[#135029] text-xs font-semibold shadow-xs mb-4">
-          <Leaf className="w-3.5 h-3.5 text-[#228B22]" /> Our Story
-        </span>
-        <h1 className="text-2xl sm:text-4xl font-extrabold text-[#113B1E] max-w-2xl mx-auto leading-tight">
-          Building a Modern Fresh-Produce Brand
-        </h1>
-        <p className="mt-3 text-slate-600 text-sm sm:text-base max-w-2xl mx-auto leading-relaxed">
-          VegGo Fresh Private Limited is a fresh-produce business based in
-          Hyderabad, Telangana, India. We aim to make vegetable shopping more
-          accessible and convenient through app-based and website-based
-          ordering.
-        </p>
-        <p className="mt-4 text-sm sm:text-base font-semibold text-[#135029]">
-          Freshness You Can Trust. Quality You Can Measure.
-        </p>
-      </div>
-
-      {/* 2. Founder Section (Now on TOP) */}
+      {/* 1. Meet Our Founder (SABSE TOP PAR) */}
       <div
         id="founder"
         className="bg-white border border-[#EEF4ED] rounded-3xl shadow-sm p-6 sm:p-10 grid md:grid-cols-[240px_1fr] gap-8 items-center text-left"
@@ -109,7 +90,26 @@ export default function AboutPage() {
         </div>
       </div>
 
-      {/* 3. Mission / Vision / Commitment (Right after Founder) */}
+      {/* 2. Building a Modern Fresh-Produce Brand (FOUNDER KE THEEK NICHE) */}
+      <div className="bg-[#EAF6EA] border border-[#D5EAD3] rounded-3xl p-8 sm:p-12 text-center">
+        <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-white text-[#135029] text-xs font-semibold shadow-xs mb-4">
+          <Leaf className="w-3.5 h-3.5 text-[#228B22]" /> Our Story
+        </span>
+        <h1 className="text-2xl sm:text-4xl font-extrabold text-[#113B1E] max-w-2xl mx-auto leading-tight">
+          Building a Modern Fresh-Produce Brand
+        </h1>
+        <p className="mt-3 text-slate-600 text-sm sm:text-base max-w-2xl mx-auto leading-relaxed">
+          VegGo Fresh Private Limited is a fresh-produce business based in
+          Hyderabad, Telangana, India. We aim to make vegetable shopping more
+          accessible and convenient through app-based and website-based
+          ordering.
+        </p>
+        <p className="mt-4 text-sm sm:text-base font-semibold text-[#135029]">
+          Freshness You Can Trust. Quality You Can Measure.
+        </p>
+      </div>
+
+      {/* 3. Mission / Vision / Commitment */}
       <div id="vision" className="grid md:grid-cols-3 gap-6 text-left">
         {[
           {
@@ -138,7 +138,7 @@ export default function AboutPage() {
         ))}
       </div>
 
-      {/* 4. Our Business Approach (Moved below Mission/Vision) */}
+      {/* 4. Our Business Approach */}
       <div className="grid md:grid-cols-2 gap-8 items-start text-left bg-white border border-[#EEF4ED] rounded-3xl p-6 sm:p-10 shadow-xs">
         <div className="space-y-4">
           <h2 className="text-xl sm:text-2xl font-bold text-slate-900">Our Business Approach</h2>
